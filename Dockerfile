@@ -1,6 +1,4 @@
 FROM golang
-//USER root
-//RUN apt-get update && apt-get install git
 EXPOSE 8080
 WORKDIR go/src
 COPY ./ .
