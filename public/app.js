@@ -2,7 +2,7 @@ new Vue({
     el: '#app',
 
     data: {
-        ws: null, // Our websocket
+        wss: null, // Our websocket
         newMsg: '', // Holds new messages to be sent to the server
         chatContent: '', // A running list of chat messages displayed on the screen
         email: null, // Email address used for grabbing an avatar
@@ -12,8 +12,8 @@ new Vue({
 
     created: function() {
         var self = this;
-        this.ws = new WebSocket('ws://' + window.location.host + '/ws');
-        this.ws.addEventListener('message', function(e) {
+        this.wss = new WebSocket('wss://' + window.location.host + '/wss');
+        this.wss.addEventListener('message', function(e) {
             var msg = JSON.parse(e.data);
             self.chatContent += '<div class="chip">'
                 + '<img src="' + self.gravatarURL(msg.email) + '">' // Avatar
@@ -29,7 +29,7 @@ new Vue({
     methods: {
         send: function () {
             if (this.newMsg != '') {
-                this.ws.send(
+                this.wss.send(
                     JSON.stringify({
                             email: this.email,
                             username: this.username,
